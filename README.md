@@ -18,4 +18,6 @@ Projects:
     -
 4. Language App
 
-5. Desktop cleanup 
+5. Desktop cleanup
+
+6. Fake Slots - Big project
