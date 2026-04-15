@@ -21,8 +21,11 @@ questions = [
 ]
 
 def run_quiz(questions):
+    print("------")
+    print(f"Welcome to my Quiz! There are {len(questions)} questions. GL HF!")
+    print("------")
     score = 0
-    for question in questions:
+    for i, question in enumerate(questions):
         print(question["prompt"])
         for option in question["options"]:
             print(option)
@@ -35,7 +38,7 @@ def run_quiz(questions):
             answer in question["answer"].split(". ")
             or answer == question["answer"]
         ):
-            print("Correct, good job!\n")
+            print("Correct, good job!")
             score += 1
         else:
             print("Nope, silly goose. The correct answer is", question["answer"], "\n")
@@ -43,6 +46,13 @@ def run_quiz(questions):
         print("------")
         print(f"Fun facts:\n{question['fact']}")
         print("------")
+
+        if i == len(questions) - 1:
+            input("End of questions. Press Enter to see your score...")
+        else:
+            input(f"Press Enter to go to question {i + 2} out of {len(questions)} ...")
+        print("------")
+        
 
     print(f"Quiz complete! You scored {score} out of {len(questions)}.")
     print("------")
