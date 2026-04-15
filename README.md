@@ -8,7 +8,7 @@ Projects:
   Improvements:
   - Add more and different questions
   - Edit final message depending on score, under 50% you're not smart. over 50% somewhat smart. 100% clever clogs.
-  ~~- Add a pause between each question~~
+  - ~~Add a pause between each question~~
   - Add UI
 2. Hangman
   Improvements:
