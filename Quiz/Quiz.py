@@ -25,6 +25,7 @@ def run_quiz(questions):
     print(f"Welcome to my Quiz! There are {len(questions)} questions. GL HF!")
     print("------")
     score = 0
+
     for i, question in enumerate(questions):
         print(question["prompt"])
         for option in question["options"]:
@@ -53,8 +54,15 @@ def run_quiz(questions):
             input(f"Press Enter to go to question {i + 2} out of {len(questions)} ...")
         print("------")
         
+    percentage = (score / len(questions)) * 100
+        
+    if percentage < 50:
+        print(f"DUMBO! You scored {score} out of {len(questions)}.")
+    elif percentage >= 50:
+        print(f"Good Job you completed the quiz with a score of {score} out of {len(questions)}.")
+    elif percentage == 100:
+        print(f"Congratulations you completed the quiz with full marks! {score} out of {len(questions)}.")
 
-    print(f"Quiz complete! You scored {score} out of {len(questions)}.")
     print("------")
 
 run_quiz(questions)
