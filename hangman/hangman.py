@@ -23,13 +23,19 @@ for char in chosen_film:
     else:
         film_display.append("_")
 
+guessed_letters = []
+
 attempts = 9
 
 print("Welcome to Hangman!\n", hangman_art[0])
+print("\nIn this game you will be guessing a film!")
+input("Press Enter to start...")
 
 while attempts > 0 and '_' in film_display:
     print("\n" + " ".join(film_display))
-    guess = input("Guess a letter: ")
+    guess = input("\nGuess a letter: ")
+    guessed_letters.append(guess) #Save letters already guessed
+
     if guess in chosen_film:
         for index, letter in enumerate(chosen_film):
             if letter.casefold() == guess.casefold():
@@ -37,6 +43,9 @@ while attempts > 0 and '_' in film_display:
     else:
         print(hangman_art[0])
         attempts -= 1
+
+    print("\nYour guessed letters are: " + " ".join(guessed_letters).upper())
+    print(f"Attempts: {attempts}")
 
 # Game conclusion
 if "_" not in film_display:
