@@ -34,9 +34,9 @@ input("Press Enter to start...")
 while attempts > 0 and '_' in film_display:
     print("\n" + " ".join(film_display))
     guess = input("\nGuess a letter: ")
-    guessed_letters.append(guess) #Save letters already guessed
 
-    if guess in chosen_film:
+    if guess in chosen_film and guess not in guessed_letters:
+        guessed_letters.append(guess)
         for index, letter in enumerate(chosen_film):
             if letter.casefold() == guess.casefold():
                 film_display[index] = letter #reveal the letter
