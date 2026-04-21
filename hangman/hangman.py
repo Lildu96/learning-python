@@ -16,7 +16,13 @@ hangman_art = [
 chosen_film = random.choice(films)
 
 # Display "_" for each letter
-film_display = ['_' for _ in chosen_film]
+film_display = []
+for char in chosen_film:
+    if char == " ":
+        film_display.append(" ")
+    else:
+        film_display.append("_")
+
 attempts = 9
 
 print("Welcome to Hangman!\n", hangman_art[0])
