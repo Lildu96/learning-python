@@ -1,9 +1,10 @@
 import random
 
-films = ["The Shawshank Redemption", "The Godfather", "The Dark Knight", "The Lord Of The Rings", "Pulp Fiction"]
+films = ["The Shawshank Redemption"] 
+         # "The Godfather", "The Dark Knight", "The Lord Of The Rings", "Pulp Fiction"]
 
 hangman_art = [
-    '''
+    r'''
     +-----+
     O     |
    /|\    |
@@ -25,8 +26,8 @@ while attempts > 0 and '_' in film_display:
     guess = input("Guess a letter: ")
     if guess in chosen_film:
         for index, letter in enumerate(chosen_film):
-            if letter == guess:
-                film_display[index] = guess #reveal the letter
+            if letter.casefold() == guess.casefold():
+                film_display[index] = letter #reveal the letter
     else:
         print(hangman_art[0])
         attempts -= 1
