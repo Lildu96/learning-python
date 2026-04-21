@@ -5,12 +5,75 @@ films = ["The Shawshank Redemption"]
 
 hangman_art = [
     r'''
+    
+
+
+
+
+    ''',
+    r'''
+
+    
+
+
+      ====+
+    ''',
+    r'''
+          +
+          |
+          |
+          |
+      ====+
+    ''',
+    r'''
+    +-----+
+          |
+          |
+          |
+      ====+
+    ''',
+    r'''
+    +-----+
+    0     |
+          |
+          |
+      ====+
+    ''',
+    r'''
+    +-----+
+    0     |
+    |     |
+          |
+      ====+
+    ''',
+    r'''
+    +-----+
+    0     |
+    |\    |
+          |
+      ====+
+    ''',
+    r'''
+    +-----+
+    0     |
+   /|\    |
+          |
+      ====+
+    ''',
+    r'''
+    +-----+
+    0     |
+   /|\    |
+     \    |
+      ====+
+    ''',
+    r'''
     +-----+
     O     |
    /|\    |
    / \    |
-      ====+'''
-
+      ====+
+    '''
 ]
 # Randomly choose a word
 chosen_film = random.choice(films)
@@ -27,25 +90,30 @@ guessed_letters = []
 
 attempts = 9
 
-print("Welcome to Hangman!\n", hangman_art[0])
+print("Welcome to Hangman!\n", hangman_art[9])
 print("\nIn this game you will be guessing a film!")
 input("Press Enter to start...")
 
 while attempts > 0 and '_' in film_display:
+
     print("\n" + " ".join(film_display))
     guess = input("\nGuess a letter: ")
 
     if guess in chosen_film and guess not in guessed_letters:
-        guessed_letters.append(guess)
         for index, letter in enumerate(chosen_film):
             if letter.casefold() == guess.casefold():
                 film_display[index] = letter #reveal the letter
     else:
-        print(hangman_art[0])
         attempts -= 1
 
+# Add new guess to guessed_letters
+    if guess not in guessed_letters:
+        guessed_letters.append(guess)
+
+    art_stage = 9 - attempts
+
+    print(hangman_art[art_stage])
     print("\nYour guessed letters are: " + " ".join(guessed_letters).upper())
-    print(f"Attempts: {attempts}")
 
 # Game conclusion
 if "_" not in film_display:
@@ -53,4 +121,4 @@ if "_" not in film_display:
     print(" ".join(film_display))
     print(hangman_art[0])
 else:
-    print("You Died!", hangman_art[0])
+    print("You Died!\n", hangman_art[9])
