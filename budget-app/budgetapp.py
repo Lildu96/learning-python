@@ -1,49 +1,61 @@
 import json
 
+def parse_money(user_input):
+    return float(user_input)
+
+def format_money(amount):
+    return f"£{amount:.2f}"
+
 def add_expense(expenses, description, amount):
     expenses.append({"description": description, "amount": amount})
-    print(f"Added expense: {description}, Amount: {amount}")
+    print(f"Added expense: {description}, Amount: {format_money(amount)}")
 
 def get_total_expenses(expenses):
-    sum = 0
+    total = 0
     for expense in expenses:
-        sum += expense["amount"]
-        return sum
+        total += expense["amount"]
+    return total
 
 def get_balance(budget, expenses):
     return budget - get_total_expenses(expenses)
 
 def show_budget_details(budget, expenses):
-    print(f"Total Budget: £{budget}")
-    print("Expenses: ")
-    for expense in expenses:
-        print (f"- {expense['description']}: £{expense['amount']}")
-    print(f"Total Spend: £{get_total_expenses(expenses)}")
-    print(f"Remaining Budget: £{get_balance(budget, expenses)}")
+    print(f"Total Budget: {format_money(budget)}")
+    if not expenses:
+        print("Expenses: None")
+    else:
+        print("Expenses: ")
+        for expense in expenses:
+            print (f"- {expense['description']}: {format_money(expense['amount'])}")
+    print(f"Total Spend: {format_money(get_total_expenses(expenses))}")
+    print(f"Remaining Budget: {format_money(get_balance(budget, expenses))}")
 
 def load_budget_data(filepath):
     try:
         with open(filepath, 'r') as file:
             data = json.load(file)
-            return data["initial_budget"], data["expenses"]
+            return data["budget"], data["expenses"]
     except (FileNotFoundError, json.JSONDecodeError):
         return 0, []
     
-def save_budget_details(filepath, initial_budget, expenses):
+def save_budget_details(filepath, budget, expenses):
     data = {
-        'initial_budget': initial_budget,
+        'budget': budget,
         'expenses': expenses
     }
     with open(filepath, 'w') as file:
         json.dump(data, file, indent=4)
 
+def reset_budget_data(filepath):
+    save_budget_details(filepath, 0, [])
+    return 0, []
+    
 def main():
     print("Welcome to the Budget App")
     filepath = 'budget_data.json'
-    initial_budget, expenses = load_budget_data(filepath)
-    if initial_budget == 0:
-        initial_budget = float(input("Please enter your initial budget: "))
-    budget = initial_budget
+    budget, expenses = load_budget_data(filepath)
+    if budget == 0:
+        budget = parse_money(input("Please enter your initial budget: £"))
 
 
     while True:
@@ -51,18 +63,23 @@ def main():
         print("1. Add an expense")
         print("2. Show budget details")
         print("3. Exit")
+        print("4. Reset budget data")
         choice = input("Enter your choice: ")
 
         if choice == "1":
-            amount = float(input("Enter expense amount: "))
+            amount = parse_money(input("Enter expense amount: £"))
             description = input("Enter expense description: ")
             add_expense(expenses, description, amount)
         elif choice == "2":
             show_budget_details(budget, expenses)
         elif choice == "3":
-            save_budget_details(filepath, initial_budget, expenses)
+            save_budget_details(filepath, budget, expenses)
             print("Exiting Budget App. CIAO!")
             break
+        elif choice == "4":
+            budget, expenses = reset_budget_data(filepath)
+            print("Your budget and expenses have been reset")
+            budget = parse_money(input("Please enter your initial budget: £"))
         else:
             print("Invalid choice, please choose again.")
 
